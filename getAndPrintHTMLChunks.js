@@ -1,3 +1,5 @@
+var https = require('https'); 
+
 function getAndPrintHTMLChunks () {
 
   var requestOptions = {
@@ -9,10 +11,11 @@ function getAndPrintHTMLChunks () {
 
     // set encoding of received data to UTF-8
     response.setEncoding('utf8');
-  
+    var buffer = {};
     // the callback is invoked when a `data` chunk is received
-    response.on('data', function (data) {
-      console.log('Chunk Received. Length:', data.length);
+    response.on('data', function (chunk) {
+      buffer += chunk;
+      console.log(buffer + '\n');
     });
   
     // the callback is invoked when all of the data has been received
@@ -21,5 +24,6 @@ function getAndPrintHTMLChunks () {
       console.log('Response stream complete.');
     });
   
-  }
+  });
 }
+getAndPrintHTMLChunks();
